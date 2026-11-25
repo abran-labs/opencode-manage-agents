@@ -4,7 +4,7 @@ import { tmpdir } from "node:os"
 import { join } from "node:path"
 
 test("reset asks before removing a primary agent’s default and fallback chain",async()=>{
-  const {editAgents}=await import("../editor-ui.js")
+  const {editAgents}=await import("../src/shared/editor-ui.js")
   const before={model:"p/a",chain:["p/a","p/b"]},saves=[],confirmations=[]
   await editAgents({api:{catalog:async()=>({agents:[{id:"build",name:"Build",mode:"primary"}],models:[]}),load:async()=>before,save:async v=>saves.push(v)},
     direct:true,select:async()=>"build",pickNative:async()=>"inherit",confirmReset:async(name,chain)=>{confirmations.push([name,chain,saves.length]);return confirmations.length===2},notify:()=>{}})
@@ -13,7 +13,7 @@ test("reset asks before removing a primary agent’s default and fallback chain"
 })
 
 test("fallback panel reorders and replaces backups without changing the active agent or separate routing head",async()=>{
-  const {editAgents}=await import("../editor-ui.js")
+  const {editAgents}=await import("../src/shared/editor-ui.js")
   const before={model:"p/a",chain:["p/z","p/b","p/c"]}
   let saved,checks
   const actions=["down:0","change:0","save"]
@@ -27,7 +27,7 @@ test("fallback panel reorders and replaces backups without changing the active a
 })
 
 test("desktop agent selection goes straight to models and preserves backups on save",async()=>{
-  const {editAgents}=await import("../editor-ui.js")
+  const {editAgents}=await import("../src/shared/editor-ui.js")
   const before={model:"p/a",chain:["p/a","p/b"]}
   const steps=["build","p/c"], pages=[]
   let saved
@@ -38,7 +38,7 @@ test("desktop agent selection goes straight to models and preserves backups on s
 })
 
 test("leaving unsaved fallback edits returns to the model picker without persisting a partial chain",async()=>{
-  const {editAgents}=await import("../editor-ui.js")
+  const {editAgents}=await import("../src/shared/editor-ui.js")
   const before={model:"p/a",chain:[]}, screens=[], saves=[]
   const answers=["fallbacks",{ref:"p/b",variant:"low"},undefined], actions=["add","back"]
   await editAgents({direct:true,api:{catalog:async()=>({agents:[{id:"build",name:"Build"}],models:[]}),load:async()=>before,save:async v=>saves.push(v)},
@@ -49,7 +49,7 @@ test("leaving unsaved fallback edits returns to the model picker without persist
 })
 
 test("empty fallback editors treat worker-quick like any other agent",async()=>{
-  const {editAgents}=await import("../editor-ui.js")
+  const {editAgents}=await import("../src/shared/editor-ui.js")
   async function screens(id){
     const result=[]
     const api={catalog:async()=>({agents:[{id,name:"Agent"}],models:[]}),load:async()=>({model:"p/a",chain:[]})}
@@ -67,8 +67,8 @@ test("empty fallback editors treat worker-quick like any other agent",async()=>{
 })
 
 test("native picker can promote a fallback with a new thinking level without switching the chat",async()=>{
-  const {editAgents}=await import("../editor-ui.js")
-  const {agentPickerSelection}=await import("../agent-picker-selection.js")
+  const {editAgents}=await import("../src/shared/editor-ui.js")
+  const {agentPickerSelection}=await import("../src/desktop/agent-picker-selection.js")
   const recent=[],saves=[],before={model:"p/a",chain:["p/a","p/b","p/c"]}
   await editAgents({direct:true,api:{catalog:async()=>({agents:[{id:"build",name:"Build"}],models:[]}),load:async()=>before,save:async v=>saves.push(v)},
     select:async()=>"build",notify:()=>{},pickNative:settings=>new Promise(resolve=>{
@@ -82,8 +82,8 @@ test("native picker can promote a fallback with a new thinking level without swi
 })
 
 async function tabFixture(state,run,effective="p/a#low"){
-  const {editAgents}=await import("../editor-ui.js")
-  const {openConfig}=await import("../config.js")
+  const {editAgents}=await import("../src/shared/editor-ui.js")
+  const {openConfig}=await import("../src/server/config.js")
   const dir=mkdtempSync(join(tmpdir(),"manage-agents-tabs-")),file=join(dir,"opencode.jsonc"),pkg="/example/manage-agents"
   try {
     writeFileSync(file,JSON.stringify({agents:{build:{model:state.model}},plugins:[{package:pkg,options:{
@@ -396,7 +396,7 @@ test("one scoped edit persists default + ordered fallbacks without clobbering co
   try {
     const file = join(dir,"opencode.jsonc"), pkg = "/example/manage-agents"
     writeFileSync(file,`{\n  // preserve this\n  "agents":{"plan":{"model":"one/a","description":"keep"}},\n  "plugins":[{"package":"${pkg}","options":{"accounts":{"one":"billing"},"chains":{"plan":["one/z","two/b"]}}}]\n}`,{mode:0o600})
-    const {openConfig} = await import("../config.js").catch(()=>({}))
+    const {openConfig} = await import("../src/server/config.js").catch(()=>({}))
     expect(typeof openConfig).toBe("function")
     const config = openConfig(file,pkg)
     const before = config.read("plan")
@@ -415,7 +415,7 @@ test("one scoped edit persists default + ordered fallbacks without clobbering co
 })
 
 test("reordering an existing chain does not replace a separately configured head", async()=>{
-  const {editAgents}=await import("../editor-ui.js")
+  const {editAgents}=await import("../src/shared/editor-ui.js")
   const before={model:"p/a",chain:["p/z","p/b","p/c"]}
   const actions=["build","edit:0","down","save"]
   let saved
@@ -425,7 +425,7 @@ test("reordering an existing chain does not replace a separately configured head
 })
 
 test("idle restores the original model after fallback options are removed at the same location",async()=>{
-  const {installFallback}=await import("../fallback.js")
+  const {installFallback}=await import("../src/server/fallback.js")
   const hooks={},a={providerID:"p",id:"a"},b={providerID:"p",id:"b"}
   const session={agent:"plan",model:a}
   const ctx={location:{directory:"/reload-fixture"},options:{chains:{plan:["p/a","p/b"]}},session:{

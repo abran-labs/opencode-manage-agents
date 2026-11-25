@@ -2,9 +2,9 @@ import { test, expect } from "bun:test"
 import { mkdtempSync, writeFileSync, readFileSync, rmSync } from "node:fs"
 import { tmpdir } from "node:os"
 import { join } from "node:path"
-import { openConfig } from "../config.js"
-import { contract } from "../rpc.js"
-import { parse } from "../vendor/jsonc.js"
+import { openConfig } from "../src/server/config.js"
+import { contract } from "../src/shared/rpc.js"
+import { parse } from "../src/vendor/jsonc.js"
 
 function fixture(run,stored,metadata,counts) {
   const dir=mkdtempSync(join(tmpdir(),"manage-agents-slots-"))

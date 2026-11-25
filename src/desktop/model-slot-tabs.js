@@ -1,6 +1,6 @@
 import {createComponent} from "solid-js"
 import {insert} from "solid-js/web"
-import {DEFAULT_FALLBACK_SLOTS,MAX_FALLBACK_SLOTS,canCloseFallback} from "./slot-limits.js"
+import {DEFAULT_FALLBACK_SLOTS,MAX_FALLBACK_SLOTS,canCloseFallback} from "../shared/slot-limits.js"
 
 const offsets=new WeakMap()
 let nextID=0

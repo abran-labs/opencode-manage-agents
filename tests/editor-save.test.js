@@ -2,9 +2,9 @@ import { test, expect } from "bun:test"
 import { mkdtempSync, mkdirSync, writeFileSync, readFileSync, rmSync } from "node:fs"
 import { tmpdir } from "node:os"
 import { join } from "node:path"
-import { installEditor } from "../editor-server.js"
-import { editAgents } from "../editor-ui.js"
-import { parse } from "../vendor/jsonc.js"
+import { installEditor } from "../src/server/editor-server.js"
+import { editAgents } from "../src/shared/editor-ui.js"
+import { parse } from "../src/vendor/jsonc.js"
 
 function fixture(setup) {
   const dir=mkdtempSync(join(tmpdir(),"manage-save-")),root=join(dir,"opencode")

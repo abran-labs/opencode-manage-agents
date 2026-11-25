@@ -6,12 +6,12 @@
   "homepage": "https://github.com/abran-labs/opencode-manage-agents",
   "type": "module",
   "license": "MIT",
-  "exports": {".":"./index.js","./server":"./index.js","./tui":"./tui.js","./gui-experimental":"./gui-experimental.cjs","./rpc":"./rpc.js"},
-  "files": ["*.js","tui-picker.jsx","gui-experimental.cjs","vendor/","THIRD_PARTY_NOTICES.md"],
+  "exports": {".":"./src/server/index.js","./server":"./src/server/index.js","./tui":"./src/tui/tui.js","./gui-experimental":"./dist/gui-experimental.cjs","./rpc":"./src/shared/rpc.js"},
+  "files": ["src/server/","src/shared/","src/tui/","src/vendor/","dist/","THIRD_PARTY_NOTICES.md"],
   "scripts": {
     "test":"bun test tests",
-    "build:picker":"node build-native-picker.mjs",
-    "build:desktop":"bun build-palette.mjs"
+    "build:picker":"node scripts/build-native-picker.mjs",
+    "build:desktop":"bun scripts/build-palette.mjs"
   },
   "devDependencies": {
     "@babel/parser":"7.29.15",

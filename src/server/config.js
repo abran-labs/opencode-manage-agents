@@ -3,8 +3,8 @@ import { spawnSync } from "node:child_process"
 import { randomUUID } from "node:crypto"
 import { dirname, join, resolve } from "node:path"
 import { fileURLToPath } from "node:url"
-import { getNodeValue, modify, applyEdits, parseTree, findNodeAtLocation, createScanner, SyntaxKind } from "./vendor/jsonc.js"
-import { DEFAULT_FALLBACK_SLOTS, clampFallbackSlots, validFallbackSlotCount } from "./slot-limits.js"
+import { getNodeValue, modify, applyEdits, parseTree, findNodeAtLocation, createScanner, SyntaxKind } from "../vendor/jsonc.js"
+import { DEFAULT_FALLBACK_SLOTS, clampFallbackSlots, validFallbackSlotCount } from "../shared/slot-limits.js"
 
 const format = { formattingOptions: {insertSpaces:true, tabSize:2, eol:"\n"} }
 const validRef = /^[^/#\s]+\/[^#\s]+(?:#[^#\s]+)?$/

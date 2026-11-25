@@ -1,5 +1,5 @@
 import {expect,test} from "bun:test"
-import {catalogRows,filterRows,displayItems,slotTabs,tabWindow,variantChoices,moveIndex} from "../tui-picker-model.js"
+import {catalogRows,filterRows,displayItems,slotTabs,tabWindow,variantChoices,moveIndex} from "../src/tui/tui-picker-model.js"
 
 const models=[
   {ref:"anthropic/opus",name:"Claude Opus",variants:["default","high","max"]},
@@ -74,7 +74,7 @@ test("move index wraps single steps and clamps pages",()=>{
 })
 
 test("list window keeps the highlighted line visible and clamps wheel offsets",async()=>{
-  const {listWindow}=await import("../tui-picker-model.js")
+  const {listWindow}=await import("../src/tui/tui-picker-model.js")
   expect(listWindow(30,0,8,0)).toEqual({start:0,end:8})
   expect(listWindow(30,12,8,0)).toEqual({start:5,end:13})
   expect(listWindow(30,6,8,5)).toEqual({start:5,end:13})

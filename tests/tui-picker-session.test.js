@@ -1,5 +1,5 @@
 import {expect,test} from "bun:test"
-import {createPickerSession} from "../tui-picker-session.js"
+import {createPickerSession} from "../src/tui/tui-picker-session.js"
 
 const signal=value=>{let v=value;return [()=>v,next=>{v=next}]}
 function host(){

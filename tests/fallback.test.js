@@ -1,5 +1,5 @@
 import { test, expect } from "bun:test"
-import { installFallback } from "../fallback.js"
+import { installFallback } from "../src/server/fallback.js"
 
 const primary = {providerID:"sample",id:"primary"}
 const next = {providerID:"sample",id:"next",variant:"high"}

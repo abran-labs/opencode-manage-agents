@@ -2,7 +2,7 @@ import {expect,test} from "bun:test"
 import {mkdtempSync,readFileSync,rmSync,writeFileSync,mkdirSync} from "node:fs"
 import {join} from "node:path"
 import {tmpdir} from "node:os"
-import {tuiPreferences} from "../tui-preferences.js"
+import {tuiPreferences} from "../src/tui/tui-preferences.js"
 
 test("ranks native favorites and recents without mutating catalog rows or preferences",()=>{
   const root=mkdtempSync(join(tmpdir(),"manage-agents-prefs-"))

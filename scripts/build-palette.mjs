@@ -2,8 +2,9 @@
 import {createRequire} from "node:module"
 import {join,dirname,resolve} from "node:path"
 import {fileURLToPath,pathToFileURL} from "node:url"
-import {writeFileSync} from "node:fs"
-const here=dirname(fileURLToPath(import.meta.url))
+import {mkdirSync,writeFileSync} from "node:fs"
+const here=resolve(dirname(fileURLToPath(import.meta.url)),"..")
+const desktop=join(here,"src/desktop")
 if(!process.env.OPENCODE_SOURCE)throw Error("Set OPENCODE_SOURCE to an OpenCode source checkout with workspace dependencies installed")
 const repo=resolve(process.env.OPENCODE_SOURCE)
 const fromApp=createRequire(join(repo,"packages/app/package.json"))
@@ -11,7 +12,7 @@ const load=name=>import(pathToFileURL(fromApp.resolve(name)).href)
 const {build}=await load("vite")
 const {default:solid}=await load("vite-plugin-solid")
 const {gui}=await load("@opencode/plugin/gui/vite")
-const vendor=join(here,"vendor")
+const vendor=join(here,"src/vendor")
 const config={root:here,configFile:false,publicDir:false}
 const options={write:false,emptyOutDir:false,sourcemap:false}
 const notice="See LICENSE and THIRD_PARTY_NOTICES.md at the package root."
@@ -29,11 +30,12 @@ function write(bundle,dir,names){
 const palette=await build({...config,plugins:[solid()],resolve:{alias:{
   "opencode-search-list":join(repo,"packages/ui/src/forms/search-list/search-list.tsx"),
   "opencode-flyout":join(repo,"packages/app/src/providers/models/select-dialog-machine.ts"),
-  "@opencode/ui/icon":join(here,"palette-icon.tsx"),
+  "@opencode/ui/icon":join(desktop,"palette-icon.tsx"),
 }},build:{...options,outDir:vendor,minify:false,
-  lib:{entry:join(here,"desktop-palette.tsx"),formats:["es"],fileName:()=>"desktop-palette.js",cssFileName:"desktop-palette"},
+  lib:{entry:join(desktop,"desktop-palette.tsx"),formats:["es"],fileName:()=>"desktop-palette.js",cssFileName:"desktop-palette"},
   rollupOptions:{external:id=>/^solid-js(?:\/|$)/.test(id)}
 }})
 write(palette,vendor,["desktop-palette.js","desktop-palette.css"])
-const bundle=await build({...config,plugins:gui({entry:"gui.js"}),build:options})
-write(bundle,here,["gui-experimental.cjs"])
+const bundle=await build({...config,plugins:gui({entry:join(desktop,"gui.js")}),build:options})
+mkdirSync(join(here,"dist"),{recursive:true})
+write(bundle,join(here,"dist"),["gui-experimental.cjs"])
