@@ -1,4 +1,4 @@
-import {editAgents} from "./editor-ui.js"
+import {editAgents} from "../shared/editor-ui.js"
 import {catalogRows} from "./tui-picker-model.js"
 import {createPickerSession} from "./tui-picker-session.js"
 

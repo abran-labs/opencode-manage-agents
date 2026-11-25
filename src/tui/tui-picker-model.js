@@ -1,4 +1,4 @@
-import {MAX_FALLBACK_SLOTS,canCloseFallback} from "./slot-limits.js"
+import {MAX_FALLBACK_SLOTS,canCloseFallback} from "../shared/slot-limits.js"
 
 // Pure state for the terminal slot picker. Kept apart from JSX so it is testable without a renderer.
 

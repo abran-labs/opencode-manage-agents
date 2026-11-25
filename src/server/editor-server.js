@@ -1,6 +1,6 @@
 import {homedir} from "node:os"
 import {join} from "node:path"
-import {contract} from "./rpc.js"
+import {contract} from "../shared/rpc.js"
 import {globalConfig} from "./config.js"
 import {addAgent} from "./add-agent.js"
 

@@ -1,5 +1,5 @@
 import {createComponent,createEffect,createRoot,createSignal} from "solid-js"
-import {contract} from "./rpc.js"
+import {contract} from "../shared/rpc.js"
 import {tuiPreferences} from "./tui-preferences.js"
 import {runAgentsEditor} from "./tui-controller.js"
 import {SlotPicker} from "./tui-picker.jsx"

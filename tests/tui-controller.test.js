@@ -1,5 +1,5 @@
 import {expect,test} from "bun:test"
-import {runAgentsEditor} from "../tui-controller.js"
+import {runAgentsEditor} from "../src/tui/tui-controller.js"
 
 const signal=value=>{let v=value;return [()=>v,next=>{v=typeof next==="function"?next(v):next}]}
 const tick=()=>new Promise(r=>setTimeout(r,0))

@@ -163,5 +163,5 @@ ${pickerSearchList}
 ${declarations}
 return {Dialog:HostDialog,DialogHeader:HostDialogHeader,DialogTitleGroup:HostDialogTitleGroup,DialogBody:HostDialogBody,TextInput:HostTextInput,Picker:${picker},useLocal:${useLocal},usePreferences,useDialog:${code.slice(program.scope.getBinding(picker).path.node.start).match(/^function [\w$]+\([\w$]+\)\{let [\w$]+=([\w$]+)\(\)/)[1]}}
 }\n`
-writeFileSync(new URL("./vendor/native-picker.js",import.meta.url),source)
+writeFileSync(new URL("../src/vendor/native-picker.js",import.meta.url),source)
 console.log(`Included ${decls.size} native picker declarations; shared ${deps.length} renderer modules`)

@@ -3,7 +3,7 @@ import {mkdtempSync,readFileSync,rmSync} from "node:fs"
 import {tmpdir} from "node:os"
 import {join} from "node:path"
 test("adding an agent creates one named profile and refuses duplicates or path-like names",async()=>{
-  const {addAgent}=await import("../add-agent.js").catch(()=>({}))
+  const {addAgent}=await import("../src/server/add-agent.js").catch(()=>({}))
   expect(typeof addAgent).toBe("function")
   const root=mkdtempSync(join(tmpdir(),"add-agent-"))
   try{
