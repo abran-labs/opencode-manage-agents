@@ -1,0 +1,20 @@
+name: Tests
+on: [push, pull_request]
+permissions:
+  contents: read
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: 1.4.2
+      - run: bun test tests
+      - name: Check published entrypoints
+        run: |
+          node --input-type=module <<'JS'
+          import { access, readFile } from 'node:fs/promises'
+          const pkg = JSON.parse(await readFile('package.json', 'utf8'))
+          await Promise.all(Object.values(pkg.exports).map(path => access(path)))
+          JS

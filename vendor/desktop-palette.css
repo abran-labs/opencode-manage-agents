@@ -1,0 +1,538 @@
+/*! See LICENSE and THIRD_PARTY_NOTICES.md at the package root. */
+[data-component="menu-scroll"] {
+  position: relative;
+  display: flex;
+  min-height: 0;
+  flex-direction: column;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+[data-component="menu-scroll"] > [data-scrollable] {
+  min-height: 0;
+  overflow-y: auto;
+}
+
+[data-slot="menu-scroll-thumb"] {
+  display: none;
+}
+
+/* High-contrast modes keep the native scrollbar, which follows the system colours. */
+@media (hover: hover) and (pointer: fine) and (forced-colors: none) {
+  [data-component="menu-scroll"] > [data-scrollable] {
+    scrollbar-width: none;
+  }
+
+  [data-component="menu-scroll"] > [data-scrollable]::-webkit-scrollbar {
+    display: none;
+  }
+
+  [data-slot="menu-scroll-thumb"] {
+    position: absolute;
+    z-index: 1;
+    inset-inline-end: 0;
+    top: 0;
+    display: block;
+    width: 8px;
+    opacity: 0;
+    pointer-events: none;
+    touch-action: none;
+    user-select: none;
+    transition: opacity 200ms ease;
+
+    &::after {
+      position: absolute;
+      inset: 0 2px;
+      border-radius: 9999px;
+      background: var(--v2-border-border-muted);
+      content: "";
+    }
+
+    &:hover::after {
+      background: var(--v2-border-border-strong);
+    }
+  }
+
+  [data-component="menu-scroll"]:is([data-scrolling], [data-dragging]) > [data-slot="menu-scroll-thumb"],
+  [data-slot="menu-scroll-thumb"]:hover {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  [data-component="menu-scroll"][data-dragging] > [data-slot="menu-scroll-thumb"]::after {
+    background: var(--v2-border-border-strong);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-slot="menu-scroll-thumb"] {
+    transition: none;
+  }
+}
+/* Vite can link this before the app entry CSS, so name every layer here or `components` ranks below Tailwind's base reset. */
+@layer properties, theme, base, components, utilities;
+
+@layer components {
+  [data-component="text-input-v2"] {
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+    padding-block: 0;
+    padding-inline: 0 8px;
+    gap: 8px;
+    width: 280px;
+    height: 28px;
+    border: 0;
+    border-radius: 6px;
+    outline: 1px solid transparent;
+    outline-offset: -1px;
+    background: var(--v2-background-bg-base);
+    box-shadow: var(--v2-elevation-input);
+    flex: none;
+    align-self: stretch;
+    transition:
+      background 85ms ease-out,
+      box-shadow 85ms ease-out;
+  }
+
+  [data-component="text-input-v2"][data-appearance="small"] {
+    height: 24px;
+  }
+
+  [data-component="text-input-v2"][data-appearance="large"] {
+    height: 32px;
+  }
+
+  [data-component="text-input-v2"][data-surface="layer-1"] {
+    background: var(--v2-background-bg-layer-01);
+  }
+
+  [data-component="text-input-v2"][data-surface="invisible"] {
+    background: transparent;
+    box-shadow: none;
+  }
+
+  @media (hover: hover) {
+    [data-component="text-input-v2"]:where(:hover):not([data-disabled], [data-invalid], [data-surface="invisible"]):not(
+        :focus-within
+      ) {
+      box-shadow:
+        inset 0 0 0 100vmax var(--v2-overlay-simple-overlay-hover),
+        var(--v2-elevation-input);
+    }
+
+    [data-component="text-input-v2"][data-surface="invisible"]:where(:hover):not([data-disabled], [data-invalid]):not(
+        :focus-within
+      ) {
+      background: var(--v2-overlay-simple-overlay-hover);
+    }
+  }
+
+  [data-component="text-input-v2"]:where(:focus-within):not([data-disabled], [data-invalid]) {
+    outline-color: var(--v2-border-border-focus);
+    box-shadow: none;
+  }
+
+  [data-component="text-input-v2"]:where([data-invalid]):not([data-disabled]) {
+    outline-color: var(--v2-state-fg-danger);
+    box-shadow: none;
+  }
+
+  [data-component="text-input-v2"]:where([data-disabled]) {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
+  [data-component="text-input-v2"] [data-slot="text-input-v2-value"] {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    align-self: stretch;
+    padding: 0;
+    gap: 6px;
+    min-width: 0;
+    flex: 1 1 auto;
+    min-height: 0;
+  }
+
+  [data-component="text-input-v2"] [data-slot="text-input-v2-leading-icon"] {
+    display: flex;
+    flex: none;
+    align-items: center;
+    justify-content: center;
+    padding-inline-start: 8px;
+    color: var(--v2-icon-icon-muted);
+  }
+
+  [data-component="text-input-v2"] [data-slot="text-input-v2-leading-icon"] :is(svg, [data-slot="icon-svg"]) {
+    display: block;
+    flex: none;
+  }
+
+  [data-component="text-input-v2"][data-leading-icon] [data-slot="text-input-v2-input"] {
+    padding-inline-start: 0;
+  }
+
+  [data-component="text-input-v2"] [data-slot="text-input-v2-input"] {
+    display: block;
+    width: 100%;
+    min-width: 0;
+    height: 100%;
+    padding-block: 0;
+    padding-inline: 8px 0;
+    margin: 0;
+    border: 0;
+    background: transparent;
+    outline: none;
+    font-style: normal;
+    font-weight: 440;
+    font-size: 13px;
+    line-height: var(--line-height-compact);
+    letter-spacing: -0.04px;
+    color: var(--v2-text-text-base);
+    font-variation-settings: "slnt" 0;
+  }
+
+  [data-component="text-input-v2"] [data-slot="text-input-v2-input"]::placeholder {
+    color: var(--v2-text-text-faint);
+    user-select: none;
+  }
+
+  [data-component="text-input-v2"] [data-slot="text-input-v2-input"][type="search"]::-webkit-search-cancel-button {
+    -webkit-appearance: none;
+    appearance: none;
+    display: none;
+  }
+
+  [data-component="text-input-v2"][data-numeric] [data-slot="text-input-v2-input"] {
+    font-variant-numeric: tabular-nums;
+  }
+
+  [data-component="text-input-v2"] [data-slot="text-input-v2-icon-button"] {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    align-self: center;
+    flex: none;
+    width: 20px;
+    height: 20px;
+    padding: 2px;
+    gap: 3px;
+    border: 0;
+    border-radius: 4px;
+    background: transparent;
+    color: var(--v2-icon-icon-muted);
+    cursor: pointer;
+    outline: none;
+  }
+
+  [data-component="text-input-v2"]
+    [data-slot="text-input-v2-icon-button"]:is(:hover, [data-state="hover"]):not(:disabled) {
+    background-color: var(--v2-overlay-simple-overlay-hover);
+  }
+
+  [data-component="text-input-v2"]
+    [data-slot="text-input-v2-icon-button"]:is(:active, [data-state="pressed"]):not(:disabled) {
+    background-color: var(--v2-overlay-simple-overlay-pressed);
+  }
+
+  [data-component="text-input-v2"] [data-slot="text-input-v2-icon-button"]:focus {
+    outline: none;
+  }
+
+  [data-component="text-input-v2"] [data-slot="text-input-v2-icon-button"]:focus-visible {
+    outline: 2px solid var(--v2-border-border-focus);
+    outline-offset: -2px;
+  }
+
+  [data-component="text-input-v2"]:where([data-disabled]) [data-slot="text-input-v2-icon-button"] {
+    cursor: not-allowed;
+    pointer-events: none;
+  }
+
+  [data-component="text-input-v2"] [data-slot="text-input-v2-icon-button"] [data-slot="icon-svg"] {
+    display: block;
+    flex: none;
+    color: currentColor;
+  }
+
+  /* Pulls the buttons' padding out so their glyphs sit at the same inset as the leading icon. */
+  [data-component="text-input-v2"] [data-slot="text-input-v2-trailing"] {
+    display: flex;
+    flex: none;
+    align-items: center;
+    gap: 4px;
+    margin-inline-end: -4px;
+  }
+
+  [data-component="text-input-v2"][data-invalid]:not([data-disabled]) [data-slot="text-input-v2-input"] {
+    color: var(--v2-state-fg-danger);
+    caret-color: var(--v2-state-fg-danger);
+  }
+
+  [data-component="text-input-v2"][data-invalid]:not([data-disabled]) [data-slot="text-input-v2-input"]::placeholder {
+    color: var(--v2-state-fg-danger);
+    opacity: 1;
+  }
+
+  /*
+    Forced colours remove the shadow that draws the field's edge and turn every outline the same system colour, so rest,
+    focus and invalid looked identical. The edge becomes a border (dashed when invalid) and focus gets the shared ring.
+  */
+  @media (forced-colors: active) {
+    [data-component="text-input-v2"] {
+      border: 1px solid CanvasText;
+      outline: none;
+    }
+
+    [data-component="text-input-v2"]:where([data-invalid]):not([data-disabled]) {
+      border: 2px dashed CanvasText;
+      outline: none;
+    }
+
+    [data-component="text-input-v2"]:focus-within:not([data-disabled]) {
+      outline: 2px solid Highlight;
+      outline-offset: 2px;
+    }
+  }
+}
+[data-component="search-list"] {
+  /* Sticky headers and the top fade paint this, so rows scroll under an opaque band. */
+  --search-list-surface: var(--v2-background-bg-base);
+
+  display: flex;
+  min-height: 0;
+  flex: 1;
+  flex-direction: column;
+
+  [data-slot="search-list-search"] {
+    flex-shrink: 0;
+    padding: 6px;
+
+    [data-component="text-input-v2"] {
+      width: 100%;
+      height: 36px;
+      padding-inline-end: 12px;
+      border-radius: 6px;
+      background: color-mix(in srgb, var(--v2-background-bg-layer-02) 60%, transparent);
+      box-shadow: none;
+      transition:
+        background-color 120ms ease-in-out,
+        box-shadow 120ms ease-in-out;
+    }
+
+    [data-component="text-input-v2"]:where(:hover, :focus-within):not([data-disabled], [data-invalid]) {
+      background: var(--v2-background-bg-layer-02);
+      box-shadow: none;
+    }
+
+    @media (forced-colors: none) {
+      [data-component="text-input-v2"] {
+        outline: 0;
+      }
+    }
+
+    [data-slot="text-input-v2-value"] {
+      gap: 8px;
+      border-radius: 6px;
+      background: transparent;
+    }
+
+    [data-slot="text-input-v2-leading-icon"] {
+      padding-inline-start: 12px;
+    }
+
+    [data-slot="text-input-v2-input"] {
+      border-radius: 6px;
+      background: transparent;
+    }
+  }
+
+  [data-slot="search-list-body"] {
+    display: flex;
+    min-height: 0;
+    flex: 1;
+    flex-direction: column;
+
+    &[hidden] {
+      display: none;
+    }
+  }
+
+  [data-slot="search-list-body"] > [data-component="menu-scroll"] {
+    flex: 1;
+  }
+
+  /* Arrow keys scroll the active row clear of the sticky header. Rows fade out past the bottom edge while more follow. */
+  [data-slot="search-list-scroll"] {
+    min-height: 0;
+    flex: 1;
+    --search-list-edge: linear-gradient(
+      to bottom,
+      #000 calc(100% - 24px),
+      rgb(0 0 0 / calc(1 - var(--search-list-fade-bottom, 0)))
+    );
+    scroll-padding-top: 28px;
+    -webkit-mask-image: var(--search-list-edge);
+    mask-image: var(--search-list-edge);
+  }
+
+  /* Rows fade out under the top section's header, or under the field when it has none. Headers stay above the fade. */
+  [data-slot="search-list-fade"] {
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    height: 0;
+    pointer-events: none;
+
+    &::before {
+      position: absolute;
+      inset: var(--search-list-fade-offset, 0px) 0 auto;
+      height: 24px;
+      background: linear-gradient(var(--search-list-surface), transparent);
+      content: "";
+      opacity: var(--search-list-fade-top, 0);
+    }
+  }
+
+  [data-slot="search-list-results"] {
+    display: flex;
+    flex-direction: column;
+    padding: 6px 6px 8px;
+
+    /* Its padding would sit above the empty state and push it below the centre. */
+    &[hidden] {
+      display: none;
+    }
+  }
+
+  [data-slot="search-list-section"] {
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+
+    /* Space inside the section, not between sections, so the next header meets this one and pushes it up. */
+    &:not(:last-child) {
+      padding-bottom: 16px;
+    }
+  }
+
+  /* The header bleeds to the list's edges so rows scroll under an opaque band, and its text stays on the rows' spine. */
+  [data-slot="search-list-header"] {
+    position: sticky;
+    top: 0;
+    z-index: 2;
+    display: flex;
+    flex-shrink: 0;
+    align-items: center;
+    gap: 6px;
+    height: 28px;
+    margin-inline: -6px;
+    padding-inline: 18px;
+    background: var(--search-list-surface);
+    color: var(--v2-text-text-muted);
+    font-size: 13px;
+    font-weight: 440;
+    line-height: var(--line-height-compact);
+    letter-spacing: -0.04px;
+    user-select: none;
+  }
+
+  [data-slot="search-list-row"] {
+    display: flex;
+    width: 100%;
+    height: 36px;
+    flex-shrink: 0;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    padding: 0 12px;
+    border: 0;
+    border-radius: 6px;
+    background: transparent;
+    color: var(--v2-text-text-base);
+    text-align: start;
+    cursor: default;
+    scroll-margin-block: 0 24px;
+
+    &[data-active] {
+      background: var(--v2-overlay-simple-overlay-hover);
+      outline: none;
+    }
+
+    &[data-size="compact"] {
+      height: 28px;
+    }
+  }
+
+  /* A row under the one above it keeps clear of the fade beneath the header; a section's first row sits right under it. */
+  [data-slot="search-list-row"] + [data-slot="search-list-row"] {
+    scroll-margin-top: 24px;
+  }
+
+  [data-slot="search-list-match"] {
+    background: transparent;
+    color: var(--v2-text-text-accent);
+  }
+
+  [data-slot="search-list-empty"] {
+    display: grid;
+    min-height: 120px;
+    place-items: center;
+    color: var(--v2-text-text-muted);
+    font-size: 13px;
+    font-weight: 440;
+    line-height: var(--line-height-compact);
+    letter-spacing: -0.04px;
+  }
+
+  /* On the rows' text spine, under the bottom fade rather than inside it. */
+  [data-slot="search-list-footer"] {
+    flex-shrink: 0;
+    padding: 4px 18px 12px;
+    color: var(--v2-text-text-muted);
+    font-size: 13px;
+    font-weight: 440;
+    line-height: var(--line-height-compact);
+    letter-spacing: -0.04px;
+  }
+
+  &[data-popover] {
+    --search-list-surface: var(--v2-background-bg-layer-01);
+
+    position: relative;
+    flex: none;
+
+    [data-slot="search-list-body"] {
+      position: absolute;
+      inset-block-start: calc(100% + 4px);
+      inset-inline: 0;
+      z-index: 12;
+      max-height: min(45vh, 480px);
+      overflow: hidden;
+      border-radius: 8px;
+      background: var(--search-list-surface);
+      box-shadow: var(--v2-elevation-floating);
+    }
+
+    [data-slot="search-list-body"] > [data-component="menu-scroll"],
+    [data-slot="search-list-scroll"] {
+      flex: 0 1 auto;
+    }
+  }
+}
+
+[data-color-scheme="dark"] [data-component="search-list"] [data-slot="search-list-row"][data-active] {
+  background: var(--v2-alpha-light-10);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-component="search-list"] {
+    [data-slot="search-list-search"] [data-component="text-input-v2"] {
+      transition: none;
+    }
+  }
+}
+/*$vite$:1*/

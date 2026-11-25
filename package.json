@@ -1,0 +1,22 @@
+{
+  "name": "opencode-manage-agents",
+  "version": "0.1.0",
+  "description": "Manage OpenCode agent models and fallback chains from the TUI or desktop.",
+  "repository": {"type":"git","url":"git+https://github.com/abran-labs/opencode-manage-agents.git"},
+  "homepage": "https://github.com/abran-labs/opencode-manage-agents",
+  "type": "module",
+  "license": "MIT",
+  "exports": {".":"./index.js","./server":"./index.js","./tui":"./tui.js","./gui-experimental":"./gui-experimental.cjs","./rpc":"./rpc.js"},
+  "files": ["*.js","tui-picker.jsx","gui-experimental.cjs","vendor/","THIRD_PARTY_NOTICES.md"],
+  "scripts": {
+    "test":"bun test tests",
+    "build:picker":"node build-native-picker.mjs",
+    "build:desktop":"bun build-palette.mjs"
+  },
+  "devDependencies": {
+    "@babel/parser":"7.29.15",
+    "@babel/traverse":"7.29.15",
+    "@electron/asar":"4.3.4",
+    "@jridgewell/trace-mapping":"0.3.31"
+  }
+}
