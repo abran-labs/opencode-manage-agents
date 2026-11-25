@@ -21,7 +21,7 @@
   </g>
   <g fill="#ece9f2">
     <text x="646" y="190" font-family="Inter, Arial, sans-serif" font-size="110" font-weight="600" letter-spacing="-5">Manage Agents</text>
-    <text x="651" y="246" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="22" font-weight="600" letter-spacing="2" fill="#c6becf">SET DEFAULT MODELS FOR OPENCODE AGENTS.</text>
+    <text x="651" y="246" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="22" font-weight="600" letter-spacing="2" fill="#c6becf">CONFIGURE YOUR AGENTS</text>
   </g>
   <path d="M648 282H1400" stroke="#544d5d" stroke-width="2"/>
   <path d="M648 282H870" stroke="#bda0fa" stroke-width="4"/>

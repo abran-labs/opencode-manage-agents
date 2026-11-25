@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="680" height="238" viewBox="0 0 680 238" role="img" aria-labelledby="title desc" font-family="Inter, system-ui, sans-serif" font-size="14">
+  <title id="title">Open Manage agents from chat</title>
+  <desc id="desc">The Build dropdown is open above the chat input, beside the GPT-6.2 Astra model selector. Its sliders button opens Manage agents.</desc>
+  <rect x=".5" y=".5" width="679" height="237" rx="12" fill="#181819" stroke="#353537"/>
+  <!-- Chat composer -->
+  <rect x="37.5" y="108.5" width="605" height="110" rx="12" fill="#242425" stroke="#323234"/>
+  <text x="55" y="138" fill="#99999e">Ask anything…</text>
+  <rect x="78" y="175" width="94" height="31" rx="7" fill="#373739"/>
+  <text x="92" y="196" fill="#f1f1f3">Build</text>
+  <text x="191" y="196" fill="#c6c6ca">OpenAI / GPT-6.2 Astra</text>
+  <text x="396" y="196" fill="#c6c6ca">High</text>
+  <g fill="none" stroke="#aaaab0" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M54 190.5h12m-6-6v12m88-7 4 4 4-4m211 0 4 4 4-4m65 0 4 4 4-4"/>
+  </g>
+  <!-- The menu opens directly above the active agent control. -->
+  <rect x="78.5" y="48.5" width="192" height="121" rx="8" fill="#242425" stroke="#3b3b3e"/>
+  <path d="M79 90.5h191" stroke="#333336"/>
+  <rect x="235" y="56" width="28" height="27" rx="6" fill="#38383b"/>
+  <g fill="none" stroke="#b4b4bb" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+    <circle cx="93" cy="69" r="5"/><path d="m97 73 4 4m104-7h12m-6-6v12"/>
+    <path d="M242 66h4m5 0h5m-14 7h8m5 0h1"/><circle cx="248.5" cy="66" r="2.2"/><circle cx="252.5" cy="73" r="2.2"/>
+    <path d="m245 111 3 3 6-7"/>
+  </g>
+  <text x="109" y="75" fill="#aaaab0">Search</text>
+  <g fill="#ededf0"><text x="90" y="115">Build</text><text x="90" y="149">Plan</text></g>
+  <rect x="191.5" y="15.5" width="115" height="27" rx="6" fill="#2d2d2f" stroke="#424245"/>
+  <path d="m245 42 4 5 4-5" fill="#2d2d2f"/>
+  <text x="249" y="34" text-anchor="middle" font-size="13" fill="#fafafa">Manage agents</text>
+</svg>
